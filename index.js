@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const shortid = require('shortid');
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -16,10 +17,12 @@ const db = low(adapter)
 
 const originalTask = [
     {
+        id: "1",
         name: 'di hoc',
         status: 'done',
     },
     {
+        id: "2",
         name: 'di lam',
         status: 'not ready'
     }
@@ -44,7 +47,7 @@ app.get('/home', function (req, res) {
 })
 app.get('/task/search', function (req, res) {
     const keyword = req.query.search ? req.query.search : '';
-    CurrentTasks = AllTask.filter(element => element.name.includes(keyword, 0))
+    CurrentTasks = AllTasks.filter(element => element.name.includes(keyword, 0))
     console.log(CurrentTasks);
     res.render('./Task/Search', {
         AllTasks: CurrentTasks
@@ -57,10 +60,16 @@ app.get('/task/create', function (req, res) {
 })
 app.post('/task/create', function (req, res) {
     db.get('tasks')
-        .push({ ...req.body, status: 'not ready' })
+        .push({ ...req.body, status: 'not ready', id: shortid.generate() })
         .write()
 
     res.redirect('/task/create');
+})
+app.get('/task/:id', function (req, res) {
+    const id = req.params.id;
+    res.render('./Task/TaskDetail', {
+        task: db.get('tasks').find({ id: id }).value(),
+    })
 })
 app.get('/task', function (req, res) {
     res.render('./Task/Task', {

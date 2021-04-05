@@ -1,8 +1,16 @@
 table(class='task-table')
             tr
+                th Id
                 th Name
                 th Status
+                th Detail
             for task in AllTasks
                 tr
+                    td #{task.id}
                     td #{task.name}
                     td #{task.status}
+                    td 
+                        a(href=`/task/${task.id}`) 
+                            span &nbsp 
+                            span View
+                
