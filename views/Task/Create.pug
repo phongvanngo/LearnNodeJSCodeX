@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        style 
+            include style.css
+    body 
+        include Control.pug
+        br
+
+        h2 Create New Task
+        form(action='/task/create',method="POST")
+            input(type="text",name="name")
+            button Create
+
+        include TaskList.pug

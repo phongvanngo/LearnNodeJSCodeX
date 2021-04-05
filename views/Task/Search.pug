@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        style 
+            include style.css
+    body 
+        include Control.pug
+        br
+
+        h2 Tim kiem
+        form(action='/task/search',method="GET")
+            input(type="text",name="search")
+            button Search
+
+        include TaskList.pug

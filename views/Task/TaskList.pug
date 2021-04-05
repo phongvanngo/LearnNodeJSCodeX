@@ -1,0 +1,8 @@
+table(class='task-table')
+            tr
+                th Name
+                th Status
+            for task in AllTasks
+                tr
+                    td #{task.name}
+                    td #{task.status}
