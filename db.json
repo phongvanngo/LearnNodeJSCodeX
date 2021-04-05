@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "name": "task 1",
+      "status": "done"
+    },
+    {
+      "name": "task 2 ne",
+      "status": "not ready"
+    },
+    {
+      "name": "task 2 ne",
+      "status": "not ready"
+    },
+    {
+      "name": "yeyeyeyye ",
+      "status": "not ready"
+    }
+  ],
+  "user": {}
+}

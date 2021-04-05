@@ -2,18 +2,19 @@ const express = require('express')
 const app = express()
 const port = 3000
 var bodyParser = require('body-parser')
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
-
-// parse application/json
 app.use(bodyParser.json())
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
 
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+//db demo
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
-let AllTasks = [
+const originalTask = [
     {
         name: 'di hoc',
         status: 'done',
@@ -24,7 +25,11 @@ let AllTasks = [
     }
 ]
 
-let CurrentTasks = AllTasks
+db.defaults({ tasks: originalTask, user: {} })
+    .write();
+
+let AllTasks = db.get('tasks').value();
+let CurrentTasks = AllTasks;
 
 app.get('/', function (req, res) {
     res.render('index', {
@@ -39,7 +44,7 @@ app.get('/home', function (req, res) {
 })
 app.get('/task/search', function (req, res) {
     const keyword = req.query.search ? req.query.search : '';
-    CurrentTasks = AllTasks.filter(element => element.name.includes(keyword, 0))
+    CurrentTasks = AllTask.filter(element => element.name.includes(keyword, 0))
     console.log(CurrentTasks);
     res.render('./Task/Search', {
         AllTasks: CurrentTasks
@@ -51,7 +56,10 @@ app.get('/task/create', function (req, res) {
     })
 })
 app.post('/task/create', function (req, res) {
-    AllTasks.push({ ...req.body, status: 'not ready' });
+    db.get('tasks')
+        .push({ ...req.body, status: 'not ready' })
+        .write()
+
     res.redirect('/task/create');
 })
 app.get('/task', function (req, res) {
