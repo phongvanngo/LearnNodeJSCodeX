@@ -20,6 +20,7 @@ module.exports.search = function (req, res) {
 };
 
 module.exports.getCreate = function (req, res) {
+    console.log(req.cookies);
     res.render('./Task/Create', {
         AllTasks: AllTasks
     })
@@ -39,5 +40,9 @@ module.exports.getDetailed = function (req, res) {
     res.render('./Task/TaskDetail', {
         task: db.get('tasks').find({ id: id }).value(),
     })
+};
+module.exports.cookie = function (req, res) {
+    res.cookie('user-id', 12345);
+    res.redirect('/task/create');
 };
 

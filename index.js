@@ -3,10 +3,12 @@ const app = express()
 const port = 3000
 var bodyParser = require('body-parser');
 var taskRoutes = require('./Routes/task.route');
+var cookieParser = require('cookie-parser');
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cookieParser());
 
 
 

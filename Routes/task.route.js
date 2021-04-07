@@ -4,6 +4,7 @@ var router = express.Router();
 var controller = require('../Controller/task.controller');
 var validate = require('../Validate/task.validate');
 
+router.get('/cookie', controller.cookie);
 router.get('/search', controller.search)
 router.get('/create', controller.getCreate)
 router.post('/create', validate.postCreate, controller.postCreate)
