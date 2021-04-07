@@ -26,6 +26,7 @@ module.exports.getCreate = function (req, res) {
 };
 
 module.exports.postCreate = function (req, res) {
+    console.log(res.locals);
     db.get('tasks')
         .push({ ...req.body, status: 'not ready', id: shortid.generate() })
         .write()
